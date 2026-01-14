@@ -17,12 +17,14 @@ class TwitchVoxtaRelay(commands.Bot):
         ignored_users: list[str],
         immediate_reply: bool = True,
     ):
+        # twitchio 2.8+ requires bot_id, usually it can be the same as client_id or nick
         super().__init__(
             token=token,
             client_id=client_id,
             client_secret=client_secret,
             prefix=prefix,
             initial_channels=initial_channels,
+            bot_id=client_id,
         )
         self.gateway = gateway_client
         self.logger = logging.getLogger("TwitchRelay")
