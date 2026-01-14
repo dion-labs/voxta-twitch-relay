@@ -1,8 +1,11 @@
 # Voxta Twitch Relay
 
 [![Build Status](https://github.com/dion-labs/voxta-twitch-relay/actions/workflows/ci.yml/badge.svg)](https://github.com/dion-labs/voxta-twitch-relay/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/dion-labs/voxta-twitch-relay/branch/main/graph/badge.svg)](https://codecov.io/gh/dion-labs/voxta-twitch-relay)
 [![PyPI version](https://badge.fury.io/py/voxta-twitch-relay.svg)](https://badge.fury.io/py/voxta-twitch-relay)
+[![Python versions](https://img.shields.io/pypi/pyversions/voxta-twitch-relay.svg)](https://pypi.org/project/voxta-twitch-relay/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 A bridge between Twitch chat and the Voxta conversational AI platform. This relay captures Twitch messages and sends them to the [Voxta Gateway](https://github.com/dion-labs/voxta-gateway), allowing your AI to interact with your live audience in real-time.
 
