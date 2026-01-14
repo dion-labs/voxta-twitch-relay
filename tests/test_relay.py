@@ -1,6 +1,9 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+
 from voxta_twitch_relay.bot import TwitchVoxtaRelay
+
 
 @pytest.fixture
 def mock_gateway_client():

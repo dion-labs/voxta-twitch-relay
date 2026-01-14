@@ -1,9 +1,9 @@
-import logging
 import asyncio
-import os
-from typing import List, Optional
+import logging
+
 from twitchio.ext import commands
 from voxta_gateway.client import GatewayClient
+
 
 class TwitchVoxtaRelay(commands.Bot):
     def __init__(
@@ -11,10 +11,10 @@ class TwitchVoxtaRelay(commands.Bot):
         gateway_client: GatewayClient,
         token: str,
         client_id: str,
-        client_secret: Optional[str],
+        client_secret: str | None,
         prefix: str,
-        initial_channels: List[str],
-        ignored_users: List[str],
+        initial_channels: list[str],
+        ignored_users: list[str],
         immediate_reply: bool = True
     ):
         super().__init__(
@@ -26,8 +26,8 @@ class TwitchVoxtaRelay(commands.Bot):
         )
         self.gateway = gateway_client
         self.logger = logging.getLogger("TwitchRelay")
-        self.message_queue: List[dict] = []
-        self.relayed_history: List[dict] = []
+        self.message_queue: list[dict] = []
+        self.relayed_history: list[dict] = []
         self.stream_live = False
         self.immediate_reply = immediate_reply
         self.ignored_users = [u.lower() for u in ignored_users]
@@ -143,7 +143,11 @@ class TwitchVoxtaRelay(commands.Bot):
         gw_status = "Connected" if self.gateway.is_connected else "Disconnected"
         chat_status = "Active" if self.gateway.chat_active else "Inactive"
         ai_state = self.gateway.ai_state
-        await ctx.send(f"Gateway: {gw_status} | Chat: {chat_status} | AI State: {ai_state} | Stream Live: {self.stream_live}")
+        status_msg = (
+            f"Gateway: {gw_status} | Chat: {chat_status} | "
+            f"AI State: {ai_state} | Stream Live: {self.stream_live}"
+        )
+        await ctx.send(status_msg)
 
     @commands.command(name='setreply')
     async def set_reply(self, ctx, value: str):
