@@ -82,6 +82,8 @@ exclude = ["site*", "docs*", "tests*"]
 [dependency-groups]
 dev = [
     "mkdocs-material>=9.7.1",
+    "mkdocstrings[python]>=0.24.0",
+    "pymdown-extensions>=10.0",
     "twine>=6.2.0",
 ]
 
