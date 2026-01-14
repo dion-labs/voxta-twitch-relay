@@ -2135,32 +2135,14 @@ wheels = [
 name = "twitchio"
 version = "2.10.0"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
 dependencies = [
-    { name = "aiohttp", marker = "python_full_version < '3.11'" },
-    { name = "iso8601", marker = "python_full_version < '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "aiohttp" },
+    { name = "iso8601" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/de/61/3f177d7e48af2816bd7bc639a7d5c4f2fa0ff3ae46faf36754b3c3676de9/twitchio-2.10.0.tar.gz", hash = "sha256:3ae5e17b3764eff24ad7d12decb473c9d34f18510b5d705e0bbe6fcf0b06fd75", size = 114393, upload-time = "2024-06-25T14:47:22.463Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4b/be/49d93b0e13dad69a636e550a7b96a5208af9a91100f9b142a363882e0c4c/twitchio-2.10.0-py3-none-any.whl", hash = "sha256:7aa0b6950dad90feeb04b03fd10d3e4292fa8a7c2e7aea6b2fd6686bc5425fb2", size = 143761, upload-time = "2024-06-25T14:47:20.63Z" },
-]
-
-[[package]]
-name = "twitchio"
-version = "3.1.0"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.11'",
-]
-dependencies = [
-    { name = "aiohttp", marker = "python_full_version >= '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/4e/03/71aad99700042c98e7194c1d8778dc6ccc7b8a8967afd61bec63da68cf27/twitchio-3.1.0.tar.gz", hash = "sha256:2b1cac9e857bc524cb947c5284e704728a0561b372f1ac170f5de1714e8f8d56", size = 244969, upload-time = "2025-08-10T10:42:05.236Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b2/f1/3b3ec7cf2784f4a0745f006c1a5c130a3b4fbddcbab457fa80e5b86f8fb7/twitchio-3.1.0-py3-none-any.whl", hash = "sha256:d275d5d8c6879fae7212045e6bc08068166e3ab2824b5cbf78c82737ea94b636", size = 316539, upload-time = "2025-08-10T10:42:03.42Z" },
 ]
 
 [[package]]
@@ -2314,8 +2296,7 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "python-dotenv" },
-    { name = "twitchio", version = "2.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "twitchio", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "twitchio" },
     { name = "uvicorn", extra = ["standard"] },
     { name = "voxta-gateway" },
 ]
@@ -2356,7 +2337,7 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.1.0" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1.0" },
-    { name = "twitchio", specifier = ">=2.8.0" },
+    { name = "twitchio", specifier = ">=2.10.0,<3.0.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.27.0" },
     { name = "voxta-gateway", specifier = ">=0.1.0" },
 ]
