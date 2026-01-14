@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "voxta-twitch-relay"
-version = "0.1.0"
+version = "0.1.1.dev1"
 description = "A relay app that bridges Twitch chat with the Voxta conversational AI platform via Voxta Gateway."
 readme = "README.md"
 authors = [{ name = "Dion Labs" }]
