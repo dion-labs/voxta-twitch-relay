@@ -15,14 +15,14 @@ class TwitchVoxtaRelay(commands.Bot):
         prefix: str,
         initial_channels: list[str],
         ignored_users: list[str],
-        immediate_reply: bool = True
+        immediate_reply: bool = True,
     ):
         super().__init__(
             token=token,
             client_id=client_id,
             client_secret=client_secret,
             prefix=prefix,
-            initial_channels=initial_channels
+            initial_channels=initial_channels,
         )
         self.gateway = gateway_client
         self.logger = logging.getLogger("TwitchRelay")
@@ -34,10 +34,10 @@ class TwitchVoxtaRelay(commands.Bot):
         self.channel_name = initial_channels[0] if initial_channels else ""
 
     async def event_ready(self):
-        self.logger.info(f'Logged in as | {self.nick}')
+        self.logger.info(f"Logged in as | {self.nick}")
         print(f"\n--- Twitch Relay Logged In as {self.nick} ---")
         print(f"Relaying messages from channel: {self.channel_name}\n")
-        
+
         # Start health and stream check loops
         asyncio.create_task(self.gateway_health_loop())
         asyncio.create_task(self.stream_check_loop())
@@ -52,7 +52,7 @@ class TwitchVoxtaRelay(commands.Bot):
                     self.logger.info(f"Gateway Health: {health}")
             except Exception as e:
                 self.logger.warning(f"Gateway health check failed: {e}. Retrying in 30s...")
-            
+
             await asyncio.sleep(30)
 
     async def stream_check_loop(self):
@@ -63,15 +63,15 @@ class TwitchVoxtaRelay(commands.Bot):
                     streams = await self.fetch_streams(user_logins=[self.channel_name])
                     was_live = self.stream_live
                     self.stream_live = len(streams) > 0
-                    
+
                     if self.stream_live and not was_live:
                         self.logger.info(f"Stream is now LIVE on {self.channel_name}")
                     elif not self.stream_live and was_live:
                         self.logger.info(f"Stream went OFFLINE on {self.channel_name}")
-                
+
             except Exception as e:
                 self.logger.warning(f"Stream check failed: {e}")
-            
+
             await asyncio.sleep(60)
 
     async def event_message(self, message):
@@ -91,7 +91,7 @@ class TwitchVoxtaRelay(commands.Bot):
         msg_data = {
             "text": message.content,
             "author": message.author.name,
-            "ts": asyncio.get_event_loop().time()
+            "ts": asyncio.get_event_loop().time(),
         }
 
         if self.gateway.chat_active:
@@ -107,19 +107,17 @@ class TwitchVoxtaRelay(commands.Bot):
                 text=msg_data["text"],
                 source="twitch",
                 author=msg_data["author"],
-                immediate_reply=self.immediate_reply
+                immediate_reply=self.immediate_reply,
             )
             self.logger.info(f"Relayed to Voxta: {msg_data['author']}: {msg_data['text'][:30]}...")
-            
+
             # Track in history
-            self.relayed_history.append({
-                **msg_data,
-                "status": "relayed",
-                "relayed_at": asyncio.get_event_loop().time()
-            })
+            self.relayed_history.append(
+                {**msg_data, "status": "relayed", "relayed_at": asyncio.get_event_loop().time()}
+            )
             if len(self.relayed_history) > 100:
                 self.relayed_history.pop(0)
-                
+
         except Exception as e:
             self.logger.error(f"Failed to relay message: {e}")
             msg_data["error"] = str(e)
@@ -129,15 +127,15 @@ class TwitchVoxtaRelay(commands.Bot):
         """Process queued messages when chat becomes active."""
         if not self.message_queue:
             return
-        
+
         self.logger.info(f"Processing {len(self.message_queue)} queued messages...")
         queue_to_process = self.message_queue[:]
         self.message_queue.clear()
-        
+
         for msg in queue_to_process:
             await self.relay_message(msg)
 
-    @commands.command(name='voxta')
+    @commands.command(name="voxta")
     async def voxta_status(self, ctx):
         """Check Voxta and Gateway status."""
         gw_status = "Connected" if self.gateway.is_connected else "Disconnected"
@@ -149,10 +147,10 @@ class TwitchVoxtaRelay(commands.Bot):
         )
         await ctx.send(status_msg)
 
-    @commands.command(name='setreply')
+    @commands.command(name="setreply")
     async def set_reply(self, ctx, value: str):
         """Set immediate_reply flag (true/false)."""
-        if value.lower() in ['true', 'on', '1']:
+        if value.lower() in ["true", "on", "1"]:
             self.immediate_reply = True
             await ctx.send("Voxta immediate_reply set to True")
         else:

@@ -15,6 +15,7 @@ def mock_gateway_client():
     client.send_dialogue = AsyncMock()
     return client
 
+
 @pytest.fixture
 def bot(mock_gateway_client):
     return TwitchVoxtaRelay(
@@ -25,31 +26,31 @@ def bot(mock_gateway_client):
         prefix="!",
         initial_channels=["test_channel"],
         ignored_users=["Nightbot"],
-        immediate_reply=True
+        immediate_reply=True,
     )
+
 
 @pytest.mark.asyncio
 async def test_relay_message_active(bot, mock_gateway_client):
     msg_data = {"text": "Hello AI", "author": "user123"}
     await bot.relay_message(msg_data)
-    
+
     mock_gateway_client.send_dialogue.assert_called_once_with(
-        text="Hello AI",
-        source="twitch",
-        author="user123",
-        immediate_reply=True
+        text="Hello AI", source="twitch", author="user123", immediate_reply=True
     )
     assert len(bot.relayed_history) == 1
     assert bot.relayed_history[0]["status"] == "relayed"
+
 
 @pytest.mark.asyncio
 async def test_process_queue(bot, mock_gateway_client):
     bot.message_queue = [{"text": "Queued msg", "author": "user1"}]
     await bot.process_queue()
-    
+
     mock_gateway_client.send_dialogue.assert_called_once()
     assert len(bot.message_queue) == 0
     assert len(bot.relayed_history) == 1
+
 
 def test_ignored_users(bot):
     assert "nightbot" in bot.ignored_users
