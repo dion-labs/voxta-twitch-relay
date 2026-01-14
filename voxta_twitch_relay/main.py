@@ -21,14 +21,17 @@ def main():
     twitch_channel = os.getenv("TWITCH_CHANNEL")
     twitch_prefix = os.getenv("TWITCH_PREFIX", "!")
 
-    ignored_users_raw = os.getenv("IGNORED_USERS", "Nightbot,StreamElements").split(",")
+    ignored_users_str = os.getenv("IGNORED_USERS", "Nightbot,StreamElements") or ""
+    ignored_users_raw = ignored_users_str.split(",")
     ignored_users = [u.strip().lower() for u in ignored_users_raw if u.strip()]
 
-    gateway_url = os.getenv("GATEWAY_URL", "http://localhost:8081")
-    immediate_reply = os.getenv("IMMEDIATE_REPLY", "true").lower() == "true"
+    gateway_url = os.getenv("GATEWAY_URL", "http://localhost:8081") or "http://localhost:8081"
+    immediate_reply_str = os.getenv("IMMEDIATE_REPLY", "true") or "true"
+    immediate_reply = immediate_reply_str.lower() == "true"
 
-    debug_host = os.getenv("DEBUG_HOST", "0.0.0.0")
-    debug_port = int(os.getenv("DEBUG_PORT", "8082"))
+    debug_host = os.getenv("DEBUG_HOST", "0.0.0.0") or "0.0.0.0"
+    debug_port_str = os.getenv("DEBUG_PORT", "8082") or "8082"
+    debug_port = int(debug_port_str)
     # ---------------------
 
     if not twitch_token or not twitch_channel or not twitch_client_id:
