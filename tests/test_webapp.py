@@ -1,7 +1,10 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 from fastapi.testclient import TestClient
+
 from voxta_twitch_relay.webapp import create_debug_app
+
 
 @pytest.fixture
 def mock_bot():
@@ -14,10 +17,12 @@ def mock_bot():
     bot.message_queue = [{"author": "user2", "text": "queued"}]
     return bot
 
+
 @pytest.fixture
 def client(mock_bot):
     app = create_debug_app(mock_bot)
     return TestClient(app)
+
 
 def test_debug_index(client):
     response = client.get("/")
@@ -26,6 +31,7 @@ def test_debug_index(client):
     assert "Gateway: Connected" in response.text
     assert "user1" in response.text
     assert "user2" in response.text
+
 
 def test_api_status(client):
     response = client.get("/api/status")
